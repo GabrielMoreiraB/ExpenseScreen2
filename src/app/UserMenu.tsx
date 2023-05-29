@@ -2,7 +2,7 @@ import { Avatar, Icon, IconButton } from "@mui/material";
 import * as React from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { IUser} from "./backend";
+import { IUser, signOutEndpoint} from "./backend";
 import Box from "@mui/material/Box";
 
 interface IUserMenu {
@@ -18,7 +18,13 @@ const UserMenu = (props: IUserMenu) => {
   };
   const handleClose = () => {
     setAnchorEl(null);
+    
   };
+
+  const closePubli = ()=> {
+    
+    /* signOutEndpoint() */
+  }
 
     return ( 
         <div>
