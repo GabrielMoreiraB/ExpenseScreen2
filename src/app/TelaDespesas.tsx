@@ -3,9 +3,13 @@ import { Despesa, IUser, carregaDespesas } from "./backend";
 import SelecaoAnoMes from "./SelecaoAnoMes";
 import ExibicaoTotal from "./ExibicaoTotal";
 import TabelaDespesas from "./TabelaDespesas";
+import TabelaDespesasResumo from "./TabelaDespesasResumo";
 import Box from "@mui/material/Box";
 import { useNavigate, useParams } from "react-router-dom";
 import UserMenu from "./UserMenu";
+
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 
 interface ITelaDespesas { onSignOut: () => void;
   user: IUser;}
@@ -16,6 +20,7 @@ export default function TelaDespesas(props: ITelaDespesas) {
   const navigate = useNavigate();
 
   const [despesas, setDespesas] = useState<Despesa[]>([]);
+  const [resumo, setResumo] = useState<boolean>(false);
 
   useEffect(() => {
     carregaDespesas(anoMes).then(setDespesas);
@@ -39,7 +44,16 @@ export default function TelaDespesas(props: ITelaDespesas) {
           <UserMenu user={props.user} onSignOut={props.onSignOut}/>
         </Box>
       </Box>
-      <TabelaDespesas despesas={despesas} />
+
+     
+      <Box display='flex' gap='10px' justifyContent='center'>
+        <Button variant={resumo ? "contained":"outlined"}
+         onClick={()=>setResumo(true)} >Resumo</Button>
+        <Button variant={resumo ? "outlined":"contained"} onClick={()=>setResumo(false)}>Detalhe</Button>
+
+      </Box>
+      {!resumo && <TabelaDespesas despesas={despesas} />}
+      {resumo && <TabelaDespesasResumo despesas={despesas} />}
     </div>
   );
 }
